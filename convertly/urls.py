@@ -1,10 +1,12 @@
 
+from django.conf import settings
 from django.contrib import admin
-from django.urls import path
-
-from convertly.views import main_page
+from django.urls import path, include
+from django.conf.urls.static import static
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', main_page, name='main_page'),
+    path('api/convert/', include('convertor.urls')),
 ]
+
+urlpatterns+=static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
