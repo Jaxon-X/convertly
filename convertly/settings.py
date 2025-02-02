@@ -1,4 +1,4 @@
-
+import os
 from pathlib import Path
 
 from django.conf.global_settings import MEDIA_URL
@@ -97,8 +97,11 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/5.1/topics/i18n/
 
+# MEDIA_URL = '/files/'
+# MEDIA_ROOT = BASE_DIR/"upload_files"
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'upload_files')
 MEDIA_URL = '/files/'
-MEDIA_ROOT = BASE_DIR/"upload_files"
 
 LANGUAGE_CODE = 'en-us'
 
