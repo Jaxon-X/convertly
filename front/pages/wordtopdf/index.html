@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Word to PDF - Convertly</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="./styles/main.css">
+    <link rel="stylesheet" href="word-to-pdf.css">
+</head>
+<body>
+    <div id="navbar-container"></div>
+    <!-- Main Content -->
+    <main class="converter-page">
+        <div class="container">
+            <div class="converter-header">
+                <h1>Word dan PDF ga o'tkazish</h1>
+                <p>DOC va DOCX fayllarni PDF formatiga sifatli konvertatsiya qiling</p>
+            </div>
+
+            <div class="converter-card">
+                <div class="drop-zone">
+                    <div class="drop-zone-content">
+                        <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                            <polyline points="17 8 12 3 7 8"/>
+                            <line x1="12" y1="3" x2="12" y2="15"/>
+                        </svg>
+                        <p>Word faylni tanlang yoki bu yerga tashlang</p>
+                        <span class="drop-zone-hint">.doc, .docx (max 10MB)</span>
+                        <input type="file" id="fileInput" accept=".doc,.docx" class="file-input" />
+                        <button class="select-button">Faylni tanlash</button>
+                    </div>
+                    <div class="progress-container" style="display: none;">
+                        <div class="progress-bar">
+                            <div class="progress"></div>
+                        </div>
+                        <p class="progress-text">Konvertatsiya qilinmoqda...</p>
+                    </div>
+                </div>
+
+                <div class="converter-info">
+                    <h3>Konvertatsiya haqida</h3>
+                    <ul class="info-list">
+                        <li>Word fayllarni PDF formatiga tez va sifatli o'tkazing</li>
+                        <li>Formatlash va stillar saqlanib qoladi</li>
+                        <li>Rasmlar va jadvallar to'g'ri konvertatsiya qilinadi</li>
+                        <li>Barcha tillardagi matnlar qo'llab-quvvatlanadi</li>
+                        <li>Xavfsiz va ishonchli konvertatsiya</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="forNavbar.js"></script>
+</body>
+</html>
