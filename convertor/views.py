@@ -1,5 +1,3 @@
-from fileinput import filename
-
 from django.conf import settings
 from rest_framework.views import  APIView
 from rest_framework.response import Response
@@ -13,18 +11,24 @@ from django.core.files.storage import default_storage
 from django.http import FileResponse
 import os
 
+
 class FileConvertView(APIView):
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
         try:
-            serializer = FileUploadSerializer(data=request.data)
-            if not serializer.is_valid():
-                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             file = request.FILES['file']
             file_name = file.name
             filename, extension= os.path.splitext(file_name)
+            if not extension.lower() == ".doc" or extension.lower() == ".docx":
+                return Response({"error": "For only doc or docx file"}, status=status.HTTP_400_BAD_REQUEST)
+
+            serializer = FileUploadSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
             filename2 = filename + ".pdf"
             file_path = default_storage.save(f'upload_files/{file.name}', file)
             input_file = os.path.join(settings.MEDIA_ROOT, file_path)
