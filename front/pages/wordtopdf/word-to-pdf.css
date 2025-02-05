@@ -77,9 +77,7 @@
     color: var(--gray-dark);
 }
 
-.file-input {
-    display: none;
-}
+
 
 .select-button {
     padding: 0.75rem 1.5rem;
@@ -102,6 +100,24 @@
     margin-top: 1.5rem;
 }
 
+#customLabel {
+    display: inline-block;
+    padding: 12px 24px;
+    background-color: #007bff;
+    color: white;
+    font-size: 16px;
+    font-weight: bold;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    transition: background 0.3s;
+    border: none;
+}
+
+/* Hover effekti */
+#customLabel:hover {
+    background-color: #0056b3;
+}
 .progress-bar {
     width: 100%;
     height: 8px;
