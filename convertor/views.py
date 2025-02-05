@@ -21,7 +21,7 @@ class FileConvertView(APIView):
             file = request.FILES['file']
             file_name = file.name
             filename, extension= os.path.splitext(file_name)
-            if not extension.lower() == ".doc" or extension.lower() == ".docx":
+            if (extension.lower() == ".doc" or extension.lower() == ".docx") == False:
                 return Response({"error": "For only doc or docx file"}, status=status.HTTP_400_BAD_REQUEST)
 
             serializer = FileUploadSerializer(data=request.data)
