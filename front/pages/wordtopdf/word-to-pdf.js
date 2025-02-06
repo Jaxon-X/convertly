@@ -54,7 +54,7 @@ function isValidFile(file) {
         alert('Faqat .doc va .docx formatdagi fayllar qabul qilinadi');
         return false;
     }
-    if (file.size > 10 * 1024 * 1024) { // 10MB
+    if (file.size > 50 * 1024 * 1024) { // 10MB
         alert('Fayl hajmi 10MB dan oshmasligi kerak');
         return false;
     }

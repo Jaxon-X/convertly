@@ -51,8 +51,9 @@ class FileConvertView(APIView):
 class FileDownloadView(APIView):
     def get(self, request, filename):
         file_path = os.path.join(BASE_DIR, 'converted_files', filename)
+        print(file_path)
         if not os.path.exists(file_path):
-            return Response({"error": "Filee not found"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"error": "File not found"}, status=status.HTTP_400_BAD_REQUEST)
 
         response = FileResponse(open(file_path, 'rb'))
         response['Content-Disposition'] = f'attachment; filename="{filename}"'
