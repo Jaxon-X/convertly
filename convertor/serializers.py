@@ -15,6 +15,8 @@ class FileUploadSerializer(serializers.Serializer):
             return self.validate_excel_file(attrs)
         elif file.name.endswith('.csv'):
             return self.validate_csv_file(attrs)
+        elif file.name.endswith(".png") or file.name.endswith(".jpeg"):
+            return self.validate_image_file(attrs)
 
     def validate_doc_file(self, attrs):
         file = attrs.get('file')
@@ -40,6 +42,11 @@ class FileUploadSerializer(serializers.Serializer):
             raise serializers.ValidationError("Only .csv  files are allowed.")
         return attrs
 
+    def validate_image_file(self, attrs):
+        file = attrs.get('file')
+        if (file.name.endswith('.png') or file.name.endswith(".jpeg")) == False:
+            raise serializers.ValidationError("Only .png or .jpeg  files are allowed.")
+        return attrs
 
 
 

@@ -1,40 +1,58 @@
-document.querySelectorAll('.service-card').forEach(card => {
-    card.style.cursor = "pointer"; // Kursorni pointer qilish
 
-    card.addEventListener('click', function () {
-        const page = this.getAttribute('data-page'); // Kartaga tegishli sahifa nomi
+document.querySelectorAll('.service-card').forEach(card => {
+    card.style.cursor = "pointer";
+    card.addEventListener('click', function() {
+        const page = this.getAttribute('data-page');
         if (!page) return;
 
-        // URLni pushState orqali o'zgartiramiz
-        history.pushState({}, '', page.replace('.html', ''));
-
-        // To'g'ridan-to'g'ri sahifaga o'tish
-        window.location.href = page;
+        const cleanPath = page.replace('.html', '');
+        history.pushState({}, '', cleanPath);
+        loadPage(page);
     });
 });
 
-
-// Sahifani AJAX orqali yuklash
+// Load page content via AJAX
 function loadPage(page) {
     fetch(page)
         .then(response => {
-            if (!response.ok) {
-                throw new Error('Sahifa topilmadi');
-            }
+            if (!response.ok) throw new Error('Page not found');
             return response.text();
         })
         .then(html => {
             document.querySelector('.content').innerHTML = html;
         })
         .catch(error => {
-            console.error('Sahifa yuklanmadi:', error);
-            // Agar xato bo'lsa, sahifani to'g'ridan-to'g'ri ochamiz
+            console.error('Page load failed:', error);
             window.location.href = page;
         });
 }
+//
+//// Navigation handling
+//const routes = {
+//    '/': 'index.html',
+//    '/word-to-pdf': '/home/jaxon/Python_Projects/convertly/front/pages/wordtopdf/index.html'
+//};
+//
+//function handleRoute(pathname) {
+//    const page = routes[pathname] || routes['/'];
+//    loadPage(page);
+//}
+//
+//// Event listeners for navigation
+//document.querySelector('.converter-page').onclick = (e) => {
+//    e.preventDefault();
+//    history.pushState({}, '', '/');
+//    handleRoute('/');
+//};
+//
+//document.querySelector('.service-url').onclick = (e) => {
+//    e.preventDefault();
+//    history.pushState({}, '', '/word-to-pdf');
+//    handleRoute('/word-to-pdf');
+//};
 
-// Brauzerning "Orqaga" tugmasi bosilganda sahifani yuklash
-window.addEventListener('popstate', () => {
-    const page = location.pathname.split('/').pop() || 'home.html';
-    loadPage(page);
-});
+// Browser back/forward button handling
+window.onpopstate = () => handleRoute(window.location.pathname);
+
+// Initial route handling
+handleRoute(window.location.pathname);
