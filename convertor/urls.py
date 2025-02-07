@@ -1,7 +1,9 @@
-from convertor.views import FileConvertView, FileDownloadView
+from convertor.views import DocToPdfView, FileDownloadView, DocToTxtView, ExcelToPdfView
 from django.urls import path
 
 urlpatterns = [
-    path('doc-to-pdf/', FileConvertView.as_view(), name='file_convertor'),
-    path("download/<str:filename>/", FileDownloadView.as_view(), name='file-download')
+    path('doc-to-pdf/', DocToPdfView.as_view(), name='doc-to-pdf'),
+    path("download/<str:filename>/", FileDownloadView.as_view(), name='file-download'),
+    path("doc-to-txt/", DocToTxtView.as_view(), name="doc-to-txt"),
+    path("excel-to-pdf/", ExcelToPdfView.as_view(), name="excel-to-pdf")
 ]
