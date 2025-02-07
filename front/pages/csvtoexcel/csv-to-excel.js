@@ -48,14 +48,14 @@ fileInput.addEventListener('change', (e) => {
 
 // Faylni tekshirish
 function isValidFile(file) {
-    const validTypes = ['.xls', '.xlsx'];
+    const validTypes = ['.csv'];
     const fileExtension = file.name.substring(file.name.lastIndexOf('.')).toLowerCase();
     if (!validTypes.includes(fileExtension)) {
-        alert('Faqat .xls va .xlsx formatdagi fayllar qabul qilinadi');
+        alert('Faqat csv formatdagi fayllar qabul qilinadi');
         return false;
     }
     if (file.size > 50 * 1024 * 1024) { // 10MB
-        alert('Fayl hajmi 10MB dan oshmasligi kerak');
+        alert('Fayl hajmi 50MB dan oshmasligi kerak');
         return false;
     }
     return true;
@@ -99,7 +99,7 @@ convertBtn.addEventListener('click', async () => {
 
     try {
         // Konvertatsiya API ga yuborish
-        const response = await fetch(' http://127.0.0.1:8000/api/convert/excel-to-pdf/', {
+        const response = await fetch(' http://127.0.0.1:8000/api/convert/csv-to-excel/', {
             method: 'POST',
             body: formData
         });
