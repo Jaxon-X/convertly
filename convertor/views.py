@@ -11,8 +11,11 @@ from django.core.files.storage import default_storage
 from django.http import FileResponse
 import os
 
+from convertor.services.doctotxt import convert_doc_to_txt
+from convertor.services.exceltopdf import convert_excel_to_pdf
 
-class FileConvertView(APIView):
+
+class DocToPdfView(APIView):
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
@@ -46,6 +49,70 @@ class FileConvertView(APIView):
                 {'error': str(e)},
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+
+
+
+class  DocToTxtView(APIView):
+    def post(self, request):
+        try:
+
+            file = request.FILES['file']
+            file_name = file.name
+            filename, extension= os.path.splitext(file_name)
+            serializer = FileUploadSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+            filename2 = filename + ".txt"
+            file_path = default_storage.save(f'upload_files/{file.name}', file)
+            input_file = os.path.join(settings.MEDIA_ROOT, file_path)
+            converted = convert_doc_to_txt(input_file)
+
+            return  Response({
+                "message": "File was successfully converted",
+                "input_file_path": input_file,
+                "converted_file":converted,
+                "filename": filename2
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
+
+class ExcelToPdfView(APIView):
+    def post(self, request):
+        try:
+
+            file = request.FILES['file']
+            file_name = file.name
+            filename, extension= os.path.splitext(file_name)
+            serializer = FileUploadSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+            filename2 = filename + ".pdf"
+            file_path = default_storage.save(f'upload_files/{file.name}', file)
+            input_file = os.path.join(settings.MEDIA_ROOT, file_path)
+            converted = convert_excel_to_pdf(input_file)
+
+            return  Response({
+                "message": "File was successfully converted",
+                "input_file_path": input_file,
+                "converted_file":converted,
+                "filename": filename2
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
 
 
 class FileDownloadView(APIView):
