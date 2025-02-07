@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+   <title>Convertor - Convertly</title>
+   <link rel="preconnect" href="https://fonts.googleapis.com">
+   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+   <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+   <link rel="stylesheet" href="./styles/main.css">
+   <link rel="stylesheet" href="png-to-pdf.css">
+</head>
+<body>
+   <div id="navbar-container"></div>
+   <main class="converter-page">
+       <div class="container">
+           <div class="converter-header">
+               <h1>Convert PNG/JPEG to PDF</h1>
+               <p>Convert PNG and JPEG files to high-quality PDF format</p>
+           </div>
+
+           <div class="converter-card">
+               <div class="drop-zone">
+                   <div class="drop-zone-content">
+                       <svg class="upload-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+                           <polyline points="17 8 12 3 7 8"/>
+                           <line x1="12" y1="3" x2="12" y2="15"/>
+                       </svg>
+                       <p>Select a Word file or drag it here</p>
+                       <span class="drop-zone-hint">.png, .jpeg (max 10MB)</span>
+                       <input type="file" id="fileInput" accept=".docx, doc" class="file-input" hidden />
+                       <label for="fileInput" id="customLabel">Select File</label>
+                   </div>
+               </div>
+
+               <div class="file-preview" style="display: none;">
+                   <div class="preview-header">
+                       <span class="file-name"></span>
+                       <button class="remove-file">✕</button>
+                   </div>
+                   <div class="preview-content">
+                       <svg class="file-icon" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                           <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
+                           <polyline points="14 2 14 8 20 8"/>
+                           <line x1="16" y1="13" x2="8" y2="13"/>
+                           <line x1="16" y1="17" x2="8" y2="17"/>
+                           <line x1="10" y1="9" x2="8" y2="9"/>
+                       </svg>
+                       <button class="convert-button">Convert to PDF</button>
+                   </div>
+               </div>
+
+               <div class="conversion-progress" style="display: none;">
+                   <div class="progress-circle">
+                       <svg class="progress-ring" width="120" height="120">
+                           <circle class="progress-ring-circle" stroke="#4070f4" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
+                       </svg>
+                       <span class="progress-percent">0%</span>
+                   </div>
+                   <p class="progress-status">Converting your file...</p>
+               </div>
+
+               <div class="download-section" style="display: none;">
+                   <svg class="success-icon" xmlns="http://www.w3.org/2000/svg" width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="#28a745" stroke-width="2">
+                       <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                       <polyline points="22 4 12 14.01 9 11.01"/>
+                   </svg>
+                   <h3>Conversion Complete!</h3>
+                   <p class="result-filename"></p>
+                   <button class="download-button">Download PDF</button>
+                   <button class="convert-another">Convert Another File</button>
+               </div>
+
+               <div class="converter-info">
+                   <h3>About Conversion</h3>
+                   <ul class="info-list">
+                       <li>Quickly and efficiently convert PNG/JPEG files to PDF</li>
+                       <li>Formatting and styles are preserved.</li>
+                       <li>Images and tables are converted correctly</li>
+                       <li>Texts in all languages are supported</li>
+                       <li>Safe and reliable conversion</li>
+                   </ul>
+               </div>
+           </div>
+       </div>
+   </main>
+
+   <script src="../wordtopdf/forNavbar.js"></script>
+   <script src="png-to-pdf.js"></script>
+</body>
+</html>
