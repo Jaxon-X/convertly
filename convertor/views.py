@@ -178,6 +178,40 @@ class ImageToPdfView(APIView):
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
 
+class OdtToPdfView(APIView):
+    parser_classes = [MultiPartParser, FormParser]
+
+    def post(self, request):
+        try:
+
+            file = request.FILES['file']
+            file_name = file.name
+            filename, extension= os.path.splitext(file_name)
+
+            serializer = FileUploadSerializer(data=request.data)
+            if not serializer.is_valid():
+                return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+            filename2 = filename + ".pdf"
+            file_path = default_storage.save(f'upload_files/{file.name}', file)
+            input_file = os.path.join(settings.MEDIA_ROOT, file_path)
+            cache.set("last_upload_file", input_file, timeout=300)
+            converted = convert_doc_to_pdf(input_file)
+
+            return  Response({
+                "message": "File was successfully converted",
+                "input_file_path": input_file,
+                "converted_file":converted,
+                "filename": filename2
+            }, status=status.HTTP_200_OK)
+
+        except Exception as e:
+            return Response(
+                {'error': str(e)},
+                status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
+
 
 
 class FileDownloadView(APIView):
