@@ -138,6 +138,7 @@ function showDownloadSection(filename) {
 // PDF ni yuklab olish
 downloadButton.addEventListener('click', async () => {
     const filename = resultFilename.textContent;
+    alert(filename)
     if (!filename) return;
 
     try {
@@ -159,7 +160,7 @@ downloadButton.addEventListener('click', async () => {
         a.remove();
     } catch (error) {
         console.error('Error:', error);
-        alert('Faylni yuklashda xatolik yuz berdi: ' + error.message);
+        alert('Faylni yuklashda xatolik yuz berdi:' + error.message);
     }
 });
 
