@@ -11,12 +11,12 @@ from django.core.files.storage import default_storage
 from django.http import FileResponse
 import os
 
-from convertor.services.doctotxt import convert_doc_to_txt
-from convertor.services.exceltopdf import convert_excel_to_pdf
-from convertor.services.csvtoexcel import convert_csv_to_excel
-from convertor.services.doctopdf import convert_doc_to_pdf
-from convertor.services.imagetopdf import convert_image_to_pdf
-
+from .tasks import convertor_csv_to_excel
+from .tasks import convertor_doc_to_pdf
+from .tasks import convertor_excel_to_pdf
+from .tasks import convertor_odt_to_pdf
+from .tasks import convertor_doc_to_txt
+from .tasks import convertor_image_to_pdf
 
 class DocToPdfView(APIView):
     parser_classes = [MultiPartParser, FormParser]
@@ -37,13 +37,14 @@ class DocToPdfView(APIView):
             file_path = default_storage.save(f'upload_files/{file.name}', file)
             input_file = os.path.join(settings.MEDIA_ROOT, file_path)
             cache.set("last_upload_file", input_file, timeout=300)
-            converted = convert_doc_to_pdf(input_file)
+            converted = convertor_doc_to_pdf.delay(input_file)
 
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
                 "converted_file":converted,
-                "filename": filename2
+                "filename": filename2,
+                "task_id": converted.id
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
@@ -70,13 +71,14 @@ class  DocToTxtView(APIView):
             file_path = default_storage.save(f'upload_files/{file.name}', file)
             input_file = os.path.join(settings.MEDIA_ROOT, file_path)
             cache.set("last_upload_file", input_file, timeout=300)
-            converted = convert_doc_to_txt(input_file)
+            converted = convertor_doc_to_txt.delay(input_file)
 
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
                 "converted_file":converted,
-                "filename": filename2
+                "filename": filename2,
+                "task_id": converted.id
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
@@ -102,13 +104,14 @@ class ExcelToPdfView(APIView):
             file_path = default_storage.save(f'upload_files/{file.name}', file)
             input_file = os.path.join(settings.MEDIA_ROOT, file_path)
             cache.set("last_upload_file", input_file, timeout=300)
-            converted = convert_excel_to_pdf(input_file)
+            converted = convertor_excel_to_pdf.delay(input_file)
 
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
                 "converted_file":converted,
-                "filename": filename2
+                "filename": filename2,
+                "task_id": converted.id
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
@@ -134,12 +137,13 @@ class CsvToExcelView(APIView):
             file_path = default_storage.save(f'upload_files/{file.name}', file)
             input_file = os.path.join(settings.MEDIA_ROOT, file_path)
             cache.set("last_upload_file", input_file, timeout=300)
-            converted = convert_csv_to_excel(input_file)
+            converted = convertor_csv_to_excel.delay(input_file)
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
                 "converted_file":converted,
-                "filename": filename2
+                "filename": filename2,
+                "task_id": converted.id
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
@@ -164,12 +168,13 @@ class ImageToPdfView(APIView):
             file_path = default_storage.save(f'upload_files/{file.name}', file)
             input_file = os.path.join(settings.MEDIA_ROOT, file_path)
             cache.set("last_upload_file", input_file, timeout=300)
-            converted = convert_image_to_pdf(input_file)
+            converted = convertor_image_to_pdf.delay(input_file)
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
                 "converted_file":converted,
-                "filename": filename2
+                "filename": filename2,
+                "task_id": converted.id
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
@@ -197,13 +202,14 @@ class OdtToPdfView(APIView):
             file_path = default_storage.save(f'upload_files/{file.name}', file)
             input_file = os.path.join(settings.MEDIA_ROOT, file_path)
             cache.set("last_upload_file", input_file, timeout=300)
-            converted = convert_doc_to_pdf(input_file)
+            converted = convertor_odt_to_pdf.delay(input_file)
 
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
                 "converted_file":converted,
-                "filename": filename2
+                "filename": filename2,
+                "task_id": converted.id
             }, status=status.HTTP_200_OK)
 
         except Exception as e:
