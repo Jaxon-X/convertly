@@ -6,6 +6,7 @@ import subprocess
 
 def convert_doc_to_pdf(input_file_path):
     try:
+        print("salom")
         output_dir = "/home/jaxon/Python_Projects/convertly/converted_files"
         result = subprocess.run(
             ['soffice',
@@ -16,6 +17,8 @@ def convert_doc_to_pdf(input_file_path):
              input_file_path],
             check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         )
+        print("nima gap")
+        print("result", result)
         output_file_path = os.path.join(output_dir, os.path.splitext(os.path.basename(input_file_path))[0] + '.pdf')
         return output_file_path
 

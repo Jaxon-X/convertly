@@ -11,19 +11,13 @@ from django.core.files.storage import default_storage
 from django.http import FileResponse
 import os
 
-from .tasks import convertor_csv_to_excel
-from .tasks import convertor_doc_to_pdf
-from .tasks import convertor_excel_to_pdf
-from .tasks import convertor_odt_to_pdf
-from .tasks import convertor_doc_to_txt
-from .tasks import convertor_image_to_pdf
+from .tasks import convertor_csv_to_excel, convertor_doc_to_pdf, convertor_excel_to_pdf, convertor_odt_to_pdf, convertor_image_to_pdf, convertor_doc_to_txt
 
 class DocToPdfView(APIView):
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
         try:
-
             file = request.FILES['file']
             file_name = file.name
             filename, extension= os.path.splitext(file_name)
@@ -38,11 +32,11 @@ class DocToPdfView(APIView):
             input_file = os.path.join(settings.MEDIA_ROOT, file_path)
             cache.set("last_upload_file", input_file, timeout=300)
             converted = convertor_doc_to_pdf.delay(input_file)
+            # print(converted.get())
 
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
-                "converted_file":converted,
                 "filename": filename2,
                 "task_id": converted.id
             }, status=status.HTTP_200_OK)
@@ -222,13 +216,19 @@ class OdtToPdfView(APIView):
 
 class FileDownloadView(APIView):
     def get(self, request, filename):
-        file_path = os.path.join(BASE_DIR, 'converted_files', filename)
-        if not os.path.exists(file_path):
-            return Response({"error": "File not found"}, status=status.HTTP_400_BAD_REQUEST)
+        try:
+            file_path = os.path.join(BASE_DIR, 'converted_files', filename)
+            print(file_path)
+            if not os.path.exists(file_path):
+                return Response({"error": "File not found"}, status=status.HTTP_400_BAD_REQUEST)
 
-        response = FileResponse(open(file_path, 'rb'))
-        response['Content-Disposition'] = f'attachment; filename="{filename}"'
-        last_upload_file = cache.get('last_upload_file')
-        default_storage.delete(last_upload_file)
-        cache.delete('last_upload_file')
-        return response
+            response = FileResponse(open(file_path, 'rb'))
+            response['Content-Disposition'] = f'attachment; filename="{filename}"'
+            last_upload_file = cache.get('last_upload_file')
+            default_storage.delete(last_upload_file)
+            cache.delete('last_upload_file')
+            return response
+
+        except Exception as e:
+            return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
