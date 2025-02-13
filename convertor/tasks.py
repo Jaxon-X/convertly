@@ -37,21 +37,21 @@ def convertor_csv_to_excel(input_file):
 def convertor_odt_to_pdf(input_file):
     return convert_odt_to_pdf(input_file)
 
-#
-# @shared_task
-# def cleanup_files():
-#     converted_files_path = "/home/jaxon/Python_Projects/convertly/converted_files"
-#     upload_files_path = "/home/jaxon/Python_Projects/convertly/upload_files"
-#     if os.path.exists(converted_files_path):
-#         shutil.rmtree(converted_files_path)
-#     elif os.path.exists(upload_files_path):
-#         shutil.rmtree(upload_files_path)
-
 
 @shared_task
-def download_converted_file(filename):
-    response = FileResponse(open(file_path, 'rb'))
-    response['Content-Disposition'] = f'attachment; filename="{filename}"'
-    last_upload_file = cache.get('last_upload_file')
-    default_storage.delete(last_upload_file)
-    cache.delete('last_upload_file')
+def cleanup_files():
+    converted_files_path = "/home/jaxon/Python_Projects/convertly/converted_files"
+    upload_files_path = "/home/jaxon/Python_Projects/convertly/upload_files"
+    if os.path.exists(converted_files_path):
+        shutil.rmtree(converted_files_path)
+    elif os.path.exists(upload_files_path):
+        shutil.rmtree(upload_files_path)
+
+
+# @shared_task
+# def download_converted_file(filename):
+#     response = FileResponse(open(file_path, 'rb'))
+#     response['Content-Disposition'] = f'attachment; filename="{filename}"'
+#     last_upload_file = cache.get('last_upload_file')
+#     default_storage.delete(last_upload_file)
+#     cache.delete('last_upload_file')

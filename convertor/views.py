@@ -5,6 +5,8 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django.core.cache import cache
 from convertly.settings import BASE_DIR
 
+from celery.result import AsyncResult
+
 from convertor.serializers import FileUploadSerializer
 from rest_framework import status
 from django.core.files.storage import default_storage
@@ -231,4 +233,20 @@ class FileDownloadView(APIView):
 
         except Exception as e:
             return Response({'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
+
+
+class CheckStatusConvertView(APIView):
+    def get(self, request, task_id):
+        try:
+            task_result = AsyncResult(task_id)
+            return Response(
+                {
+                    'task_status':task_result.status,
+                    'ready': task_result.ready()
+                }
+            )
+        except Exception as e:
+            return Response(
+                {'error': str(e)}, status=status.HTTP_500_INTERNAL_SERVER_ERROR
+            )
 
