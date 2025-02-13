@@ -1,5 +1,5 @@
 from convertor.views import DocToPdfView, FileDownloadView, DocToTxtView, ExcelToPdfView, CsvToExcelView, \
-    ImageToPdfView, OdtToPdfView
+    ImageToPdfView, OdtToPdfView, CheckStatusConvertView
 from django.urls import path
 
 urlpatterns = [
@@ -9,5 +9,6 @@ urlpatterns = [
     path("excel-to-pdf/", ExcelToPdfView.as_view(), name="excel-to-pdf"),
     path("csv-to-excel/", CsvToExcelView.as_view(), name="csv-to-excel"),
     path("image-to-pdf/", ImageToPdfView.as_view(), name="image-to-pdf"),
-    path("odt-to-pdf/", OdtToPdfView.as_view(), name="odt-to-pdf")
+    path("odt-to-pdf/", OdtToPdfView.as_view(), name="odt-to-pdf"),
+    path('status/<str:task_id>/', CheckStatusConvertView.as_view(), name='check-status')
 ]
