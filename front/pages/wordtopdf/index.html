@@ -10,6 +10,7 @@
    <link rel="stylesheet" href="./styles/main.css">
    <link rel="stylesheet" href="word-to-pdf.css">
 </head>
+
 <body>
    <div id="navbar-container"></div>
    <main class="converter-page">
@@ -52,11 +53,8 @@
                </div>
 
                <div class="conversion-progress" style="display: none;">
-                   <div class="progress-circle">
-                       <svg class="progress-ring" width="120" height="120">
-                           <circle class="progress-ring-circle" stroke="#4070f4" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-                       </svg>
-                       <span class="progress-percent">0%</span>
+                   <div class="progress-bar-container">
+                       <div class="progress-bar"></div>
                    </div>
                    <p class="progress-status">Converting your file...</p>
                </div>
@@ -68,19 +66,46 @@
                    </svg>
                    <h3>Conversion Complete!</h3>
                    <p class="result-filename"></p>
-                   <button class="download-button">Download PDF</button>
-                   <button class="convert-another">Convert Another File</button>
+                   <div class="button-group">
+                       <button class="download-button">Download PDF</button>
+                       <button class="convert-another">Convert Another File</button>
+                   </div>
                </div>
 
                <div class="converter-info">
                    <h3>About Conversion</h3>
-                   <ul class="info-list">
-                       <li>Quickly and efficiently convert Word files to PDF</li>
-                       <li>Formatting and styles are preserved.</li>
-                       <li>Images and tables are converted correctly</li>
-                       <li>Texts in all languages are supported</li>
-                       <li>Safe and reliable conversion</li>
-                   </ul>
+                   <div class="info-grid">
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Quickly and efficiently convert<br>Word files to PDF</span>
+                       </div>
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Formatting and styles are<br>preserved</span>
+                       </div>
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Images and tables are converted<br>correctly</span>
+                       </div>
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Texts in all languages are<br>supported</span>
+                       </div>
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Safe and reliable conversion</span>
+                       </div>
+                   </div>
                </div>
            </div>
        </div>

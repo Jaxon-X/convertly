@@ -6,32 +6,24 @@ const fileName = document.querySelector('.file-name');
 const removeFileBtn = document.querySelector('.remove-file');
 const convertBtn = document.querySelector('.convert-button');
 const conversionProgress = document.querySelector('.conversion-progress');
-const progressCircle = document.querySelector('.progress-ring-circle');
-const progressPercent = document.querySelector('.progress-percent');
 const downloadSection = document.querySelector('.download-section');
 const downloadButton = document.querySelector('.download-button');
 const convertAnotherBtn = document.querySelector('.convert-another');
 const resultFilename = document.querySelector('.result-filename');
 
-// Progress ring animation uchun o'zgaruvchilar
-const radius = 52;
-const circumference = radius * 2 * Math.PI;
-progressCircle.style.strokeDasharray = `${circumference} ${circumference}`;
-progressCircle.style.strokeDashoffset = circumference;
-
 // Faylni drag & drop qilish
 dropZone.addEventListener('dragover', (e) => {
    e.preventDefault();
-   dropZone.classList.add('drop-zone-active');
+   dropZone.classList.add('drag-over');
 });
 
 dropZone.addEventListener('dragleave', () => {
-   dropZone.classList.remove('drop-zone-active');
+   dropZone.classList.remove('drag-over');
 });
 
 dropZone.addEventListener('drop', (e) => {
    e.preventDefault();
-   dropZone.classList.remove('drop-zone-active');
+   dropZone.classList.remove('drag-over');
    const file = e.dataTransfer.files[0];
    if (file && isValidFile(file)) {
        handleFileSelect(file);
@@ -79,13 +71,6 @@ removeFileBtn.addEventListener('click', () => {
    filePreview.style.display = 'none';
 });
 
-// Konvertatsiya progressini yangilash
-function setProgress(percent) {
-   const offset = circumference - (percent / 100) * circumference;
-   progressCircle.style.strokeDashoffset = offset;
-   progressPercent.textContent = `${percent}%`;
-}
-
 // Faylni konvertatsiya qilish
 convertBtn.addEventListener('click', async () => {
    const file = fileInput.files[0];
@@ -95,7 +80,7 @@ convertBtn.addEventListener('click', async () => {
    formData.append('file', file);
 
    filePreview.style.display = 'none';
-   conversionProgress.style.display = 'flex';
+   conversionProgress.style.display = 'block';
 
    try {
        // Konvertatsiya API ga yuborish
@@ -118,17 +103,11 @@ convertBtn.addEventListener('click', async () => {
            console.log(statusData)
 
            if (statusData.task_status === 'SUCCESS') {
-               setProgress(100);
                showDownloadSection(data.filename);
                clearInterval(statusInterval);
            } else if (statusData.task_status === 'FAILURE') {
                clearInterval(statusInterval);
                throw new Error('Konvertatsiya muvaffaqiyatsiz yakunlandi');
-           } else {
-               // Progress taxminiy ko'rsatish
-               if (statusData.task_status === 'STARTED') {
-                   setProgress(50);
-               }
            }
        };
 
@@ -189,5 +168,4 @@ function resetConverter() {
    filePreview.style.display = 'none';
    conversionProgress.style.display = 'none';
    downloadSection.style.display = 'none';
-   setProgress(0);
 }
