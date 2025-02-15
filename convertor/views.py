@@ -104,7 +104,6 @@ class ExcelToPdfView(APIView):
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
-                "converted_file":converted,
                 "filename": filename2,
                 "task_id": converted.id
             }, status=status.HTTP_200_OK)
@@ -136,7 +135,6 @@ class CsvToExcelView(APIView):
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
-                "converted_file":converted,
                 "filename": filename2,
                 "task_id": converted.id
             }, status=status.HTTP_200_OK)
@@ -201,7 +199,6 @@ class OdtToPdfView(APIView):
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file,
-                "converted_file":converted,
                 "filename": filename2,
                 "task_id": converted.id
             }, status=status.HTTP_200_OK)
