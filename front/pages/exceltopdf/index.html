@@ -3,20 +3,21 @@
 <head>
    <meta charset="UTF-8">
    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>Word to PDF - Convertly</title>
+   <title>EXCEL to PDF - Convertly</title>
    <link rel="preconnect" href="https://fonts.googleapis.com">
    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
    <link rel="stylesheet" href="./styles/main.css">
    <link rel="stylesheet" href="excel-to-pdf.css">
 </head>
+
 <body>
    <div id="navbar-container"></div>
    <main class="converter-page">
        <div class="container">
            <div class="converter-header">
-               <h1>Convert Excel to PDF</h1>
-               <p>Convert EXCEL files to high-quality PDF format</p>
+               <h1>Convert EXCEL to PDF</h1>
+               <p>Convert .XLSX files to high-quality PDF format</p>
            </div>
 
            <div class="converter-card">
@@ -27,9 +28,9 @@
                            <polyline points="17 8 12 3 7 8"/>
                            <line x1="12" y1="3" x2="12" y2="15"/>
                        </svg>
-                       <p>Select a Word file or drag it here</p>
-                       <span class="drop-zone-hint">.xls, .xlsx (max 10MB)</span>
-                       <input type="file" id="fileInput" accept=".xls,.xlsx" class="file-input" hidden />
+                       <p>Select a Excel file or drag it here</p>
+                       <span class="drop-zone-hint">.xlsx (max 10MB)</span>
+                       <input type="file" id="fileInput" accept=".xlsx, .xlx" class="file-input" hidden />
                        <label for="fileInput" id="customLabel">Select File</label>
                    </div>
                </div>
@@ -52,11 +53,8 @@
                </div>
 
                <div class="conversion-progress" style="display: none;">
-                   <div class="progress-circle">
-                       <svg class="progress-ring" width="120" height="120">
-                           <circle class="progress-ring-circle" stroke="#4070f4" stroke-width="8" fill="transparent" r="52" cx="60" cy="60"/>
-                       </svg>
-                       <span class="progress-percent">0%</span>
+                   <div class="progress-bar-container">
+                       <div class="progress-bar"></div>
                    </div>
                    <p class="progress-status">Converting your file...</p>
                </div>
@@ -68,19 +66,46 @@
                    </svg>
                    <h3>Conversion Complete!</h3>
                    <p class="result-filename"></p>
-                   <button class="download-button">Download PDF</button>
-                   <button class="convert-another">Convert Another File</button>
+                   <div class="button-group">
+                       <button class="download-button">Download PDF</button>
+                       <button class="convert-another">Convert Another File</button>
+                   </div>
                </div>
 
                <div class="converter-info">
                    <h3>About Conversion</h3>
-                   <ul class="info-list">
-                       <li>Quickly and efficiently convert EXCEL files to PDF</li>
-                       <li>Formatting and styles are preserved.</li>
-                       <li>Images and tables are converted correctly</li>
-                       <li>Texts in all languages are supported</li>
-                       <li>Safe and reliable conversion</li>
-                   </ul>
+                   <div class="info-grid">
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Quickly and efficiently convert<br>EXCEL files to PDF</span>
+                       </div>
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Formatting and styles are<br>preserved</span>
+                       </div>
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Images and tables are converted<br>correctly</span>
+                       </div>
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Texts in all languages are<br>supported</span>
+                       </div>
+                       <div class="info-item">
+                           <svg class="checkmark" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+                               <path d="M4 12L9 17L20 6" stroke="#4070f4" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                           </svg>
+                           <span>Safe and reliable conversion</span>
+                       </div>
+                   </div>
                </div>
            </div>
        </div>

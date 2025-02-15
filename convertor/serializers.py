@@ -28,8 +28,8 @@ class FileUploadSerializer(serializers.Serializer):
 
     def validate_pdf_file(self, attrs):
         file = attrs.get('file')
-        if not file.name.endswith('.pdf'):
-            raise serializers.ValidationError("Only .pdf files are allowed.")
+        if not file.name.endswith('.txt'):
+            raise serializers.ValidationError("Only .txt files are allowed.")
         return attrs
 
     def validate_excel_file(self, attrs):
