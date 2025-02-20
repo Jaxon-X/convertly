@@ -4,6 +4,8 @@
     <content url="file://$MODULE_DIR$">
       <excludeFolder url="file://$MODULE_DIR$/converted_files" />
       <excludeFolder url="file://$MODULE_DIR$/upload_files" />
+      <excludeFolder url="file://$MODULE_DIR$/env/include" />
+      <excludeFolder url="file://$MODULE_DIR$/venv/include" />
     </content>
     <orderEntry type="jdk" jdkName="Python 3.10 (goodreads)" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
