@@ -13,11 +13,12 @@ from django.core.files.storage import default_storage
 from django.http import FileResponse
 import os
 
+from rest_framework.permissions import AllowAny
 from .tasks import convertor_csv_to_excel, convertor_doc_to_pdf, convertor_excel_to_pdf, convertor_odt_to_pdf, convertor_image_to_pdf, convertor_doc_to_txt
 
 class DocToPdfView(APIView):
     parser_classes = [MultiPartParser, FormParser]
-
+    permission_classes = [AllowAny]
     def post(self, request):
         try:
             file = request.FILES['file']
@@ -52,6 +53,8 @@ class DocToPdfView(APIView):
 
 
 class  DocToTxtView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
         try:
 
@@ -84,6 +87,8 @@ class  DocToTxtView(APIView):
 
 
 class ExcelToPdfView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
         try:
 
@@ -116,6 +121,8 @@ class ExcelToPdfView(APIView):
 
 
 class CsvToExcelView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
         try:
 
@@ -146,6 +153,8 @@ class CsvToExcelView(APIView):
             )
 
 class ImageToPdfView(APIView):
+    permission_classes = [AllowAny]
+
     def post(self, request):
         try:
 
@@ -176,6 +185,8 @@ class ImageToPdfView(APIView):
             )
 
 class OdtToPdfView(APIView):
+    permission_classes = [AllowAny]
+
     parser_classes = [MultiPartParser, FormParser]
 
     def post(self, request):
@@ -212,6 +223,8 @@ class OdtToPdfView(APIView):
 
 
 class FileDownloadView(APIView):
+    permission_classes = [AllowAny]
+
     def get(self, request, filename):
         try:
             file_path = os.path.join(BASE_DIR, 'converted_files', filename)
