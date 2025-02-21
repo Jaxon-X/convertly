@@ -3,8 +3,8 @@ __pycache__/
 db.sqlite3
 converted_files
 upload_files
-venv
-env
+/venv
+/env
 .env
 
 
