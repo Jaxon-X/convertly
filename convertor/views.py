@@ -35,7 +35,6 @@ class DocToPdfView(APIView):
             input_file = os.path.join(settings.MEDIA_ROOT, file_path)
             cache.set("last_upload_file", input_file, timeout=300)
             converted = convertor_doc_to_pdf.delay(input_file)
-            # print(converted.get())
 
             return  Response({
                 "message": "File was successfully converted",
