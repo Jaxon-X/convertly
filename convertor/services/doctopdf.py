@@ -6,7 +6,6 @@ import subprocess
 
 def convert_doc_to_pdf(input_file_path):
     try:
-        print("salom")
         output_dir = "/home/jaxon/Python_Projects/convertly/converted_files"
         result = subprocess.run(
             ['soffice',
@@ -26,34 +25,5 @@ def convert_doc_to_pdf(input_file_path):
     except subprocess.CalledProcessError as e:
         print(f"Error during conversion: {e}")
         return None
-
-#
-# if __name__ == "__main__":
-#     convert_doc_to_pdf("/home/jaxon/Python_Projects/convertly/upload_files/1733989053 (1).docx")
-#
-# def convert_doc_to_pdf(input_file_path):
-#     try:
-#         print(input_file_path)
-#         filename = os.path.basename(input_file_path)
-#         filename_without_doc, extension = os.path.splitext(filename)
-#         filename_pdf = filename_without_doc + ".pdf"
-#
-#         output_dir = f"/home/jaxon/Python_Projects/convertly/converted_files/{filename_pdf}"
-#         result = subprocess.run(
-#             ["pandoc", input_file_path, "-o", output_dir], check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
-#         )
-#         print(output_dir)
-#         return output_dir
-#
-#     except subprocess.CalledProcessError as e:
-#         print(f"Error during conversion: {e}")
-#         return None
-#
-#
-# if __name__ == "__main__":
-#     # convert_doc_to_pdf("/home/jaxon/Python_Projects/convertly/upload_files/1733989053 (1).docx")
-#     convert_doc_to_pdf("/home/jaxon/Python_Projects/convertly/upload_files/upload_files/5mb.docx")
-
-
 
 
