@@ -13,13 +13,18 @@
     <nav class="navbar">
         <div class="container">
             <a href="index.html" class="logo">Convertly</a>
+            <!-- Login/Register tugmalari -->
             <div class="nav-buttons">
-                <button class="btn-secondary">Login</button>
-                <button class="btn-primary">Sign Up</button>
+                <button class="btn-secondary" id="loginBtn">Login</button>
+                <button class="btn-primary" id="signUpBtn">Sign Up</button>
+            </div>
+            <!-- Profil qismi -->
+            <div class="user-profile">
+                <span class="profile-name">Foydalanuvchi</span>
+                <button class="btn-logout" id="logoutBtn">Logout</button>
             </div>
         </div>
     </nav>
-
     <header class="hero">
         <div class="container">
             <h1>Convert files easily</h1>
@@ -27,7 +32,7 @@
         </div>
     </header>
 <main>
-    <div class="content"> <!-- Qo'shilgan div -->
+    <div class="content">
         <section class="services">
             <div class="container">
                 <div class="services-grid">
@@ -141,7 +146,7 @@
                 </div>
             </div>
         </section>
-    </div> <!-- Qo'shilgan divning yopilish joyi -->
+    </div>
 </main>
 
     <footer>
@@ -149,6 +154,8 @@
             <p>&copy; 2025 Convertly. All rights reserved.</p>
         </div>
     </footer>
+
+    <!-- Asosiy JavaScript faylini ulash -->
     <script src="./scripts/main.js"></script>
 </body>
 </html>

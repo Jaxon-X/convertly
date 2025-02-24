@@ -248,4 +248,31 @@ footer p {
     }
 }
 
+.user-profile {
+    display: none; /* Boshida ko'rinmasligi uchun */
+    align-items: center;
+    gap: 1rem;
+}
+
+.profile-name {
+    font-weight: 500;
+    color: #333;
+}
+
+.btn-logout {
+    background-color: #2F64F7;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    padding: 0.5rem 1rem;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    transition: background-color 0.3s;
+}
+
+.btn-logout:hover {
+    background-color: #6585DE;
+}
+
 

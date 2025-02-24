@@ -1,32 +1,4 @@
 
-document.querySelectorAll('.service-card').forEach(card => {
-    card.style.cursor = "pointer";
-    card.addEventListener('click', function() {
-        const page = this.getAttribute('data-page');
-        if (!page) return;
-
-        const cleanPath = page.replace('.html', '');
-        history.pushState({}, '', cleanPath);
-        loadPage(page);
-    });
-});
-
-// Load page content via AJAX
-function loadPage(page) {
-    fetch(page)
-        .then(response => {
-            if (!response.ok) throw new Error('Page not found');
-            return response.text();
-        })
-        .then(html => {
-            document.querySelector('.content').innerHTML = html;
-        })
-        .catch(error => {
-            console.error('Page load failed:', error);
-            window.location.href = page;
-        });
-}
-
 document.addEventListener('DOMContentLoaded', function() {
     // Login va register tugmalariga hodisalarni ulash
     const loginButton = document.getElementById('loginBtn');
@@ -87,9 +59,3 @@ function checkUserSession() {
         if (userProfile) userProfile.style.display = 'none';
     }
 }
-
-// Browser back/forward button handling
-window.onpopstate = () => handleRoute(window.location.pathname);
-
-// Initial route handling
-//handleRoute(window.location.pathname);
