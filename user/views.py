@@ -1,4 +1,3 @@
-from http.client import ResponseNotReady
 
 from django.contrib.auth import authenticate
 from rest_framework import status
@@ -7,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from user.models import CustomUser
 from user.serializers import RegisterSerializer, LoginSerializer
 
 
@@ -34,9 +34,11 @@ class LoginView(APIView):
                 user = authenticate(request=request, username=email, password=password)
                 if user is None:
                     return Response({"error": "username or password are not correct"}, status=status.HTTP_400_BAD_REQUEST)
-
+                user_data = CustomUser.objects.get(email__iexact=email)
                 tokens = RefreshToken.for_user(user)
+
                 return Response({
+                    "username":user_data.username,
                     "refresh": str(tokens),
                     "access": str(tokens.access_token),
                     "message": "User successfully logged in"

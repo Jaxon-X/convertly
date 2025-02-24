@@ -50,11 +50,6 @@ const handleLogin = async (e) => {
         return;
     }
 
-//    if (!validatePassword(password)) {
-//        showError('passwordError', 'Password must be at least 8 characters long');
-//        return;
-//    }
-
     try {
         const response = await fetch(API_ENDPOINTS.login, {
             method: 'POST',
@@ -73,6 +68,9 @@ const handleLogin = async (e) => {
         // Save tokens
         localStorage.setItem('accessToken', data.access);
         localStorage.setItem('refreshToken', data.refresh);
+        localStorage.setItem('isLoggedIn', true);
+        localStorage.setItem('userData', data.username);
+
 
         // Redirect to main page
         window.location.href = '/convertly/front/index.html';

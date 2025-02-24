@@ -11,3 +11,4 @@ fetch("../../navbar/navbar.html")
         document.head.appendChild(link);
     })
     .catch(error => console.error("Navbar yuklanmadi:", error));
+
