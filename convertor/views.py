@@ -18,7 +18,6 @@ from .tasks import convertor_csv_to_excel, convertor_doc_to_pdf, convertor_excel
 
 class DocToPdfView(APIView):
     parser_classes = [MultiPartParser, FormParser]
-    permission_classes = (IsAuthenticated,)
     def post(self, request):
         try:
             file = request.FILES['file']
@@ -52,7 +51,6 @@ class DocToPdfView(APIView):
 
 
 class  DocToTxtView(APIView):
-    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:
@@ -86,7 +84,6 @@ class  DocToTxtView(APIView):
 
 
 class ExcelToPdfView(APIView):
-    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:
@@ -120,7 +117,6 @@ class ExcelToPdfView(APIView):
 
 
 class CsvToExcelView(APIView):
-    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:
@@ -152,7 +148,6 @@ class CsvToExcelView(APIView):
             )
 
 class ImageToPdfView(APIView):
-    permission_classes = (IsAuthenticated,)
 
     def post(self, request):
         try:
@@ -184,7 +179,6 @@ class ImageToPdfView(APIView):
             )
 
 class OdtToPdfView(APIView):
-    permission_classes = (IsAuthenticated,)
 
     parser_classes = [MultiPartParser, FormParser]
 
@@ -222,7 +216,6 @@ class OdtToPdfView(APIView):
 
 
 class FileDownloadView(APIView):
-    permission_classes = (IsAuthenticated,)
 
     def get(self, request, filename):
         try:
