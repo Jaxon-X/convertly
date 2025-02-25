@@ -1,44 +1,19 @@
-:root {
-    --primary-color: #2563eb;
-    --primary-dark: #1d4ed8;
-    --secondary-color: #f8fafc;
-    --text-color: #0f172a;
-    --gray-light: #e2e8f0;
-    --gray-dark: #64748b;
-}
-
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    font-family: 'Outfit', sans-serif;
-    color: var(--text-color);
-    line-height: 1.6;
-}
-
-
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 0 1.5rem;
-}
 
 /* Navbar */
 .navbar {
-    padding: 1rem 0;
-    background: white;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    height: 90px; /* Balandlikni qat’iy belgilash */
-
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
 }
 
 .navbar .container {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
 }
 
 .logo {
@@ -49,13 +24,140 @@ body {
     letter-spacing: -0.5px;
 }
 
-.nav-buttons {
+.nav-links {
     display: flex;
-    gap: 1rem;
+    align-items: center;
+    gap: 3rem; /* Menyu elementlari orasidagi masofani ko'paytirish */
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s ease;
+    white-space: nowrap; /* Matnni bir qatorga joylashtirish */
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
+}
+
+.contact-btn {
+    background: var(--primary-color);
+    color: white !important;
+    padding: 0.8rem 1.5rem; /* Tugma hajmini kattalashtirish */
+    border-radius: 8px;
+    font-weight: 500;
+    transition: all 0.2s ease;
+    margin-left: 1rem; /* Contact tugmasi bilan boshqa elementlar orasidagi masofani ko'paytirish */
+}
+
+.contact-btn:hover {
+    background: var(--primary-dark);
+}
+
+/* Responsive dizayn uchun */
+@media (max-width: 768px) {
+    .nav-links {
+        gap: 1.5rem; /* Kichik ekranlarda masofani kamaytirish */
+    }
+}
+
+@media (max-width: 640px) {
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: white;
+        flex-direction: column;
+        padding: 1rem 2rem;
+        gap: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 100;
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+}
+:root {
+    --primary-color: #4070f4;
+    --primary-dark: #3060e0;
+    --secondary-color: #f5f7fa;
+    --text-color: #1a2b4e;
+    --text-light: #6b7c93;
+    --gray-light: #e2e8f0;
+    --gray-dark: #64748b;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Outfit', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    line-height: 1.6;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1.5rem;
+}
+
+/* Navbar */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    background-color: white;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.navbar .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    font-size: 1.8rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    text-decoration: none;
+    letter-spacing: -0.5px;
+}
+
+.nav-links {
+    display: flex;
+    gap: 2rem;
+}
+
+.nav-links a {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    transition: color 0.3s ease;
+}
+
+.nav-links a:hover {
+    color: var(--primary-color);
 }
 
 /* Buttons */
-.btn-primary, .btn-secondary {
+.btn-primary, .btn-secondary, .contact-btn {
     padding: 0.5rem 1.25rem;
     border-radius: 8px;
     font-weight: 500;
@@ -63,13 +165,14 @@ body {
     transition: all 0.2s ease;
 }
 
-.btn-primary {
+.btn-primary, .contact-btn {
     background: var(--primary-color);
-    color: white;
+    color: white !important;
     border: none;
+    text-decoration: none;
 }
 
-.btn-primary:hover {
+.btn-primary:hover, .contact-btn:hover {
     background: var(--primary-dark);
 }
 
@@ -83,64 +186,67 @@ body {
     background: var(--gray-light);
 }
 
+.hamburger {
+    display: none;
+    cursor: pointer;
+    font-size: 1.5rem;
+}
+
 /* Hero Section */
 .hero {
-    padding: 5rem 0;
     text-align: center;
+    padding: 4rem 1rem;
     background: linear-gradient(to bottom, var(--secondary-color), white);
 }
 
 .hero h1 {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 1rem;
+    font-size: 2.8rem;
     color: var(--text-color);
+    margin-bottom: 1rem;
     line-height: 1.2;
 }
 
 .hero p {
-    font-size: 1.25rem;
-    color: var(--gray-dark);
-    max-width: 600px;
+    font-size: 1.2rem;
+    color: var(--text-light);
+    max-width: 800px;
     margin: 0 auto;
 }
 
-/* Services Section */
-.services {
-    padding: 5rem 0;
+/* Services/File Cards Section */
+.services, .file-cards {
+    padding: 3rem 0;
 }
 
-.services-grid {
+.services-grid, .file-cards {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
     gap: 2rem;
-    margin-top: 3rem;
+    max-width: 1200px;
+    margin: 3rem auto;
+    padding: 0 1rem;
 }
 
 .service-card {
-    flex: 1 1 300px; /* Kartalar bir xil o‘lchamda bo‘lishi uchun */
-    max-width: 320px;
-    min-height: 250px; /* Eng kichik balandlik */
-    height: 100%; /* Kartalar bir xil bo‘lishi uchun */
     display: flex;
     flex-direction: column;
-    justify-content: space-between; /* Ichidagi elementlar to‘g‘ri joylashishi uchun */
+    justify-content: space-between;
     text-decoration: none;
     padding: 2rem;
     background: white;
     border-radius: 12px;
     box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
+    height: 100%;
 }
-
 
 .service-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2); /* Hover effekti */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 
 .service-url {
-        text-decoration: none;
+    text-decoration: none;
 }
 
 .service-icon {
@@ -153,29 +259,12 @@ body {
     border-radius: 8px;
 }
 
-.pdf-merge {
-    background: #fee2e2;
-}
-
-.pdf-split {
-    background: #dbeafe;
-}
-
-.pdf-compress {
-    background: #dcfce7;
-}
-
-.word-convert {
-    background: #e0e7ff;
-}
-
-.ppt-convert {
-    background: #fef3c7;
-}
-
-.excel-convert {
-    background: #d1fae5;
-}
+.pdf-merge { background: #fee2e2; }
+.pdf-split { background: #dbeafe; }
+.pdf-compress { background: #dcfce7; }
+.word-convert { background: #e0e7ff; }
+.ppt-convert { background: #fef3c7; }
+.excel-convert { background: #d1fae5; }
 
 .service-icon svg {
     width: 24px;
@@ -242,43 +331,29 @@ footer p {
         font-size: 2.5rem;
     }
 
-    .services-grid {
-        grid-template-columns: 1fr;
+    .nav-links {
+        display: none;
+        position: absolute;
+        top: 70px;
+        left: 0;
+        right: 0;
+        background-color: white;
+        flex-direction: column;
+        padding: 1rem 2rem;
+        gap: 1rem;
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+        z-index: 100;
     }
 
-    .features-grid {
+    .nav-links.active {
+        display: flex;
+    }
+
+    .hamburger {
+        display: block;
+    }
+
+    .services-grid, .file-cards, .features-grid {
         grid-template-columns: 1fr;
     }
 }
-
-
-
-.user-profile {
-    display: none; /* Boshida ko'rinmasligi uchun */
-    align-items: center;
-    gap: 1rem;
-}
-
-.profile-name {
-    font-weight: 500;
-    color: #333;
-}
-
-.btn-logout {
-    background-color: #e11d48;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 500;
-    transition: background-color 0.3s;
-}
-
-.btn-logout:hover {
-    background-color: #be123c;
-}
-
-
-

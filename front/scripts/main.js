@@ -91,5 +91,9 @@ function checkUserSession() {
 // Browser back/forward button handling
 window.onpopstate = () => handleRoute(window.location.pathname);
 
-// Initial route handling
-//handleRoute(window.location.pathname);
+const hamburger = document.getElementById('hamburger');
+const navLinks = document.getElementById('navLinks');
+
+hamburger.addEventListener('click', () => {
+    navLinks.classList.toggle('active');
+});
