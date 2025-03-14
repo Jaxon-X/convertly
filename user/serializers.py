@@ -7,9 +7,9 @@ class RegisterSerializer(serializers.ModelSerializer):
     class Meta:
         model = CustomUser
         fields = ['id', 'username', 'email', 'password']
-        extra_kwargs = {'passowd':{'write_only':True}}
+        extra_kwargs = {'password':{'write_only':True}}
 
-    def validata_password(self, value):
+    def validate_password(self, value):
         if len(value) < 8 :
             raise serializers.ValidationError(" The password must be greater than or equal to 8 characters.")
         return value

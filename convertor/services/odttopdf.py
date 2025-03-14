@@ -14,7 +14,6 @@ def convert_odt_to_pdf(input_file_path):
             check=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE
         )
         output_file_path = os.path.join(output_dir, os.path.splitext(os.path.basename(input_file_path))[0] + '.pdf')
-        print(output_file_path)
         return output_file_path
 
 
