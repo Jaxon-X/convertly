@@ -127,14 +127,13 @@ convertBtn.addEventListener('click', async () => {
 function showDownloadSection(filename) {
    conversionProgress.style.display = 'none';
    downloadSection.style.display = 'flex';
-   alert(filename)
    resultFilename.textContent = filename;
 }
 
 // PDF ni yuklab olish
 downloadButton.addEventListener('click', async () => {
    const filename = resultFilename.textContent;
-//   if (!filename) return;
+   if (!filename) return;
 
    try {
        const response = await fetch(`http://127.0.0.1:8000/api/convert/download/${filename}/`);
