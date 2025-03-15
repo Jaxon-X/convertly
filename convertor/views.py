@@ -44,7 +44,7 @@ class DocToPdfView(APIView):
             return  Response({
                 "message": "File was successfully converted",
                 "input_file_path": input_file_path,
-                "converted_file_path": converted_file_path,
+                "filename": converted_filename,
                 "task_id": converted.id
             }, status=status.HTTP_200_OK)
 
