@@ -3,8 +3,9 @@ import subprocess
 
 def convert_excel_to_pdf(input_file_path):
     try:
-        output_dir = "/home/jaxon/Python_Projects/convertly/converted_files"
-        result = subprocess.run(
+        output_dir = "/tmp/converted_files"
+        os.makedirs(output_dir, exist_ok=True)
+        subprocess.run(
             ['soffice',
              '--headless',
              '--nologo',

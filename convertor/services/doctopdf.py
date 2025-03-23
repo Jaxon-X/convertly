@@ -26,7 +26,8 @@ def convert_doc_to_pdf(input_file_path):
         return None
 
 
-# if __name__ == "__main__":
-#     result = convert_doc_to_pdf("/home/jaxon/Downloads/5mb.docx")
-#     print(result)
+
+if __name__ == "__main__":
+    result = convert_doc_to_pdf("/home/jaxon/Downloads/5mb.docx")
+    print(result)
 

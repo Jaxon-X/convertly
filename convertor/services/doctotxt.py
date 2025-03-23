@@ -3,8 +3,9 @@ import subprocess
 
 def convert_doc_to_txt(input_file_path):
     try:
-        output_dir = "/home/jaxon/Python_Projects/convertly/converted_files"
-        result = subprocess.run(
+        output_dir = "/tmp/converted_files"
+        os.makedirs(output_dir, exist_ok=True)
+        subprocess.run(
             ['soffice',
              '--headless',
              '--nologo',
@@ -21,5 +22,8 @@ def convert_doc_to_txt(input_file_path):
         print(f"Error during conversion: {e}")
         return None
 
+
 if __name__ == "__main__":
-    convert_doc_to_txt("/home/jaxon/Python_Projects/convertly/upload_files/upload_files/5mb.docx")
+    result = convert_doc_to_txt("/home/jaxon/Downloads/1.docx")
+    print(result)
+
