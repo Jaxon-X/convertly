@@ -1,18 +1,40 @@
-from django.conf import settings
 from rest_framework.views import  APIView
 from rest_framework.response import Response
 from rest_framework.parsers import MultiPartParser, FormParser
-from django.core.cache import cache
 
 from celery.result import AsyncResult
 
 from convertor.serializers import FileUploadSerializer
 from rest_framework import status
-from django.core.files.storage import default_storage
 from django.http import FileResponse
 import os
 
-from .tasks import convertor_csv_to_excel, convertor_doc_to_pdf, convertor_excel_to_pdf, convertor_odt_to_pdf, convertor_image_to_pdf, convertor_doc_to_txt
+from convertor.paths import CONVERTED_FILES_DIR, INPUT_FILES_DIR
+from .tasks import (
+    UPLOADED_FILE_TTL_SECONDS,
+    convertor_csv_to_excel,
+    convertor_doc_to_pdf,
+    convertor_doc_to_txt,
+    convertor_excel_to_pdf,
+    convertor_image_to_pdf,
+    convertor_odt_to_pdf,
+    delete_file,
+)
+
+
+def save_uploaded_file(uploaded_file):
+    input_file_path = os.path.join(INPUT_FILES_DIR, uploaded_file.name)
+    os.makedirs(INPUT_FILES_DIR, exist_ok=True)
+
+    with open(input_file_path, 'wb') as f:
+        for chunk in uploaded_file.chunks():
+            f.write(chunk)
+
+    if os.path.exists(input_file_path):
+        delete_file.apply_async(args=[input_file_path], countdown=UPLOADED_FILE_TTL_SECONDS)
+        return input_file_path
+
+    return None
 
 class DocToPdfView(APIView):    
     parser_classes = [MultiPartParser, FormParser]
@@ -28,15 +50,10 @@ class DocToPdfView(APIView):
 
 
             converted_filename = input_filename + ".pdf"
-            input_file_path = f"/tmp/input_files/{file_name}"
-            os.makedirs("/tmp/input_files", exist_ok=True)
-            with open(input_file_path, 'wb') as f:
-                for chunk in file.chunks():
-                    f.write(chunk)
-            if not os.path.exists(input_file_path):
+            input_file_path = save_uploaded_file(file)
+            if not input_file_path:
                 return Response({"msg": "File didn't write in file"})
 
-            cache.set("input_file_path", input_file_path, timeout=300)
             converted = convertor_doc_to_pdf.delay(input_file_path)
 
             return  Response({
@@ -68,16 +85,10 @@ class  DocToTxtView(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             converted_filename = input_filename + ".txt"
-            input_file_path = f"/tmp/input_files/{file_name}"
-            os.makedirs("/tmp/input_files", exist_ok=True)
-
-            with open(input_file_path, 'wb') as f:
-                for chunk in file.chunks():
-                    f.write(chunk)
-            if not os.path.exists(input_file_path):
+            input_file_path = save_uploaded_file(file)
+            if not input_file_path:
                 return Response({"msg": "File didn't write to file"})
 
-            cache.set("input_file_path", input_file_path, timeout=300)
             converted = convertor_doc_to_txt.delay(input_file_path)
 
             return  Response({
@@ -107,16 +118,10 @@ class ExcelToPdfView(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             converted_filename = input_filename + ".pdf"
-            input_file_path = f"/tmp/input_files/{file_name}"
-            os.makedirs("/tmp/input_files", exist_ok=True)
-
-            with open(input_file_path, 'wb') as f:
-                for chunk in file.chunks():
-                    f.write(chunk)
-            if not os.path.exists(input_file_path):
+            input_file_path = save_uploaded_file(file)
+            if not input_file_path:
                 return Response({"msg": "File didn't write to file"})
 
-            cache.set("input_file_path", input_file_path, timeout=300)
             converted = convertor_excel_to_pdf.delay(input_file_path)
 
             return  Response({
@@ -146,16 +151,10 @@ class CsvToExcelView(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             converted_filename = input_filename + ".xlsx"
-            input_file_path = f"/tmp/input_files/{file_name}"
-            os.makedirs("/tmp/input_files", exist_ok=True)
-
-            with open(input_file_path, 'wb') as f:
-                for chunk in file.chunks():
-                    f.write(chunk)
-            if not os.path.exists(input_file_path):
+            input_file_path = save_uploaded_file(file)
+            if not input_file_path:
                 return Response({"msg": "File didn't write to file"})
 
-            cache.set("input_file_path", input_file_path, timeout=300)
             converted = convertor_csv_to_excel.delay(input_file_path)
             return  Response({
                 "message": "File was successfully converted",
@@ -183,16 +182,10 @@ class ImageToPdfView(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             converted_filename = input_filename + ".pdf"
-            input_file_path = f"/tmp/input_files/{file_name}"
-            os.makedirs("/tmp/input_files", exist_ok=True)
-
-            with open(input_file_path, 'wb') as f:
-                for chunk in file.chunks():
-                    f.write(chunk)
-            if not os.path.exists(input_file_path):
+            input_file_path = save_uploaded_file(file)
+            if not input_file_path:
                 return Response({"msg": "File didn't write to file"})
 
-            cache.set("input_file_path", input_file_path, timeout=300)
             converted = convertor_image_to_pdf.delay(input_file_path)
             return  Response({
                 "message": "File was successfully converted",
@@ -222,16 +215,10 @@ class OdtToPdfView(APIView):
                 return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
             converted_filename = input_filename + ".pdf"
-            input_file_path = f"/tmp/input_files/{file_name}"
-            os.makedirs("/tmp/input_files", exist_ok=True)
-
-            with open(input_file_path, 'wb') as f:
-                for chunk in file.chunks():
-                    f.write(chunk)
-            if not os.path.exists(input_file_path):
+            input_file_path = save_uploaded_file(file)
+            if not input_file_path:
                 return Response({"msg": "File didn't write to file"})
 
-            cache.set("input_file_path", input_file_path, timeout=300)
             converted = convertor_odt_to_pdf.delay(input_file_path)
 
             return  Response({
@@ -253,17 +240,12 @@ class FileDownloadView(APIView):
 
     def get(self, request, filename):
         try:
-            input_file_path = cache.get('input_file_path')
-            print(input_file_path)
-            converted_file = f"/tmp/converted_files/{filename}"
-            print(converted_file)
+            converted_file = os.path.join(CONVERTED_FILES_DIR, filename)
             if not os.path.exists(converted_file):
                 return Response({"error": "File not found"}, status=status.HTTP_400_BAD_REQUEST)
 
             response = FileResponse(open(converted_file, 'rb'))
             response['Content-Disposition'] = f'attachment; filename="{filename}"'
-            os.remove(converted_file)
-            os.remove(input_file_path)
             return response
 
         except Exception as e:

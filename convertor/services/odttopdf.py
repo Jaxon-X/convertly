@@ -1,9 +1,11 @@
 import os
 import subprocess
 
+from convertor.paths import CONVERTED_FILES_DIR
+
 def convert_odt_to_pdf(input_file_path):
     try:
-        output_dir = "/tmp/converted_files"
+        output_dir = CONVERTED_FILES_DIR
         os.makedirs(output_dir, exist_ok=True)
         subprocess.run(
             ['soffice',
