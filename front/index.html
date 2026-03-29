@@ -3,157 +3,315 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Convertly - File Conversion Made Easy</title>
+    <title>Convertly | Fast file conversion workspace</title>
+    <meta
+        name="description"
+        content="Convertly uploads, converts, and returns your files through one polished workspace for DOC, TXT, Excel, CSV, image, and ODT conversions."
+    >
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/main.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="images/img_1.png">
-
+    <link rel="icon" type="image/png" sizes="32x32" href="./images/img_1.png">
 </head>
 <body>
-    <nav class="navbar">
-    <div class="container">
-        <a href="index.html" class="logo">
-            <span class="logo-text">Convertly</span>
-        </a>
-        <div class="nav-links" id="navLinks">
-            <a href="./about/main.html" class="contact-btn">About</a>
-        </div>
-        <div class="hamburger" id="hamburger">☰</div>
-    </div>
-    </nav>
-    <header class="hero">
-        <div class="container">
-            <h1>Convert files easily</h1>
-            <p>Convert files of all formats quickly and for free</p>
-        </div>
-    </header>
-<main>
-    <div class="content">
-        <section class="services">
-            <div class="container">
-                <div class="services-grid">
-                    <a class="service-url" href="./pages/wordtopdf/index.html">
-                      <div class="service-card">
-                        <div class="service-icon pdf-merge">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#dc2626" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
-                                <path d="M12 3v18"/>
-                                <path d="M3 9h18"/>
-                            </svg>
+    <div class="page-shell">
+        <div class="ambient ambient-left"></div>
+        <div class="ambient ambient-right"></div>
+
+        <header class="topbar">
+            <div class="brandmark">
+                <img src="./images/logo.svg" alt="Convertly logo" class="brandmark-logo">
+                <div>
+                    <span class="brandmark-title">Convertly</span>
+                    <span class="brandmark-caption">Conversion Workspace</span>
+                </div>
+            </div>
+
+            <nav class="topbar-nav">
+                <a href="#tools">Tools</a>
+                <a href="#workspace">Workspace</a>
+                <a href="#process">Process</a>
+            </nav>
+
+            <a class="topbar-cta" href="#workspace">Start Converting</a>
+        </header>
+
+        <main>
+            <section class="hero section">
+                <div class="hero-copy">
+                    <span class="eyebrow">Designed for clean, instant conversion</span>
+                    <h1>One sharp interface for every file you need to transform.</h1>
+                    <p>
+                        Convertly now centers everything in one animated workspace: upload once,
+                        watch the processing state live, and download the result without hunting
+                        across disconnected pages.
+                    </p>
+
+                    <div class="hero-actions">
+                        <a class="button button-primary" href="#workspace">Open Workspace</a>
+                        <a class="button button-secondary" href="#tools">Browse Formats</a>
+                    </div>
+
+                    <dl class="hero-stats">
+                        <div class="stat-card">
+                            <dt>6</dt>
+                            <dd>Conversion paths ready</dd>
                         </div>
-                        <h3>DOC to PDF</h3>
-                        <p>Convert PDF files to DOC format</p>
-                      </div>
-                    </a>
-                    <a class="service-url" href="./pages/doctotxt/index.html">
-                       <div class="service-card">
-                            <div class="service-icon pdf-split">
-                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#2563eb" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
-                                    <line x1="12" y1="3" x2="12" y2="21"/>
-                                </svg>
+                        <div class="stat-card">
+                            <dt>10m</dt>
+                            <dd>Uploaded files auto-cleaned</dd>
+                        </div>
+                        <div class="stat-card">
+                            <dt>15m</dt>
+                            <dd>Converted files auto-cleaned</dd>
+                        </div>
+                    </dl>
+                </div>
+
+                <div class="hero-visual card-panel">
+                    <div class="hero-orbit">
+                        <div class="orbit-chip orbit-chip-primary">DOC</div>
+                        <div class="orbit-chip orbit-chip-secondary">PDF</div>
+                        <div class="orbit-chip orbit-chip-accent">CSV</div>
+                    </div>
+
+                    <div class="hero-console">
+                        <div class="console-header">
+                            <span class="console-dot"></span>
+                            <span class="console-dot"></span>
+                            <span class="console-dot"></span>
+                        </div>
+
+                        <div class="console-card">
+                            <span class="console-label">Live flow</span>
+                            <div class="console-row">
+                                <span>Upload</span>
+                                <strong>Ready</strong>
                             </div>
-                            <h3>DOC to TXT</h3>
-                            <p>Convert DOC files to TXT format</p>
+                            <div class="console-row">
+                                <span>Queue</span>
+                                <strong>Connected</strong>
+                            </div>
+                            <div class="console-row">
+                                <span>Delivery</span>
+                                <strong>Animated download</strong>
+                            </div>
                         </div>
-                    </a>
 
-                    <a class="service-url" href="./pages/exceltopdf/index.html">
-                        <div class="service-card">
-                        <div class="service-icon pdf-compress">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#16a34a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                                <polyline points="17 8 12 3 7 8"/>
-                                <line x1="12" y1="3" x2="12" y2="15"/>
-                            </svg>
+                        <div class="hero-waveform" aria-hidden="true">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
                         </div>
-                        <h3>EXCEL to PDF</h3>
-                        <p>Convet EXCEL files to PDF forma</p>
-                    </div>
-
-                    </a>
-
-                    <a class="service-url" href="./pages/csvtoexcel/index.html">
-                        <div class="service-card">
-                        <div class="service-icon word-convert">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#4f46e5" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <line x1="10" y1="9" x2="8" y2="9"/>
-                            </svg>
-                        </div>
-                        <h3>CSV to EXCEL</h3>
-                        <p>Convert CSV files to EXCEL format</p>
-                    </div>
-                    </a>
-
-                    <a class="service-url" href="./pages/pngtopdf/index.html">
-                        <div class="service-card">
-                        <div class="service-icon ppt-convert">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#d97706" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M13 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V9z"/>
-                                <path d="M13 2v7h7"/>
-                                <circle cx="12" cy="14" r="3"/>
-                            </svg>
-                        </div>
-                        <h3>PNG/JPEG to PDF</h3>
-                        <p>Convert PNG/JPEG files to PDF format</p>
-                    </div>
-                    </a>
-
-                    <a class="service-url" href="./pages/odttopdf/index.html">
-                        <div class="service-card">
-                        <div class="service-icon excel-convert">
-                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#059669" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/>
-                                <polyline points="14 2 14 8 20 8"/>
-                                <line x1="16" y1="13" x2="8" y2="13"/>
-                                <line x1="16" y1="17" x2="8" y2="17"/>
-                                <line x1="10" y1="9" x2="8" y2="9"/>
-                            </svg>
-                        </div>
-                        <h3>ODT to PDF</h3>
-                        <p>Convert ODT files to PDF format</p>
-                    </div>
-                    </a>
-
-                </div>
-            </div>
-        </section>
-
-        <section class="features">
-            <div class="container">
-                <h2>Why Convertly?</h2>
-                <div class="features-grid">
-                    <div class="feature">
-                        <h4>Faster</h4>
-                        <p>Convert your files in seconds</p>
-                    </div>
-                    <div class="feature">
-                        <h4>Safe</h4>
-                        <p>All files are securely processed and deleted</p>
-                    </div>
-                    <div class="feature">
-                        <h4>Free</h4>
-                        <p>Unlimited conversions without any fees</p>
                     </div>
                 </div>
-            </div>
-        </section>
+            </section>
+
+            <section class="section" id="tools">
+                <div class="section-heading">
+                    <span class="eyebrow">Tool Library</span>
+                    <h2>Choose a format pair and the interface reconfigures instantly.</h2>
+                    <p>
+                        Every converter now runs through the same UX system, so the experience feels
+                        consistent while each tool still has its own identity.
+                    </p>
+                </div>
+
+                <div class="tool-grid" id="toolGrid"></div>
+            </section>
+
+            <section class="section workspace-section" id="workspace">
+                <div class="workspace-layout">
+                    <aside class="workspace-sidebar card-panel">
+                        <span class="eyebrow">Current Setup</span>
+                        <h2 id="toolTitle">DOC to PDF</h2>
+                        <p id="toolDescription">
+                            Convert Word documents into clean PDF output while preserving the original
+                            structure.
+                        </p>
+
+                        <div class="tool-meta">
+                            <div class="meta-pill">
+                                <span>Accepts</span>
+                                <strong id="toolAccept">.doc, .docx</strong>
+                            </div>
+                            <div class="meta-pill">
+                                <span>Produces</span>
+                                <strong id="toolOutput">PDF</strong>
+                            </div>
+                        </div>
+
+                        <ol class="timeline-list">
+                            <li class="timeline-item is-active" data-step="select">
+                                <span class="timeline-marker"></span>
+                                <div>
+                                    <strong>Select file</strong>
+                                    <p>Drop or browse your input file.</p>
+                                </div>
+                            </li>
+                            <li class="timeline-item" data-step="convert">
+                                <span class="timeline-marker"></span>
+                                <div>
+                                    <strong>Convert</strong>
+                                    <p>We send your file to the backend worker.</p>
+                                </div>
+                            </li>
+                            <li class="timeline-item" data-step="download">
+                                <span class="timeline-marker"></span>
+                                <div>
+                                    <strong>Download</strong>
+                                    <p>Grab the processed result before auto cleanup.</p>
+                                </div>
+                            </li>
+                        </ol>
+
+                        <div class="workspace-note">
+                            <span class="note-accent"></span>
+                            <p>
+                                Uploaded files are deleted after 10 minutes. Converted files are deleted
+                                after 15 minutes.
+                            </p>
+                        </div>
+                    </aside>
+
+                    <div class="workspace-main card-panel">
+                        <div class="workspace-head">
+                            <div>
+                                <span class="eyebrow">Animated Workspace</span>
+                                <h3 id="workspaceHeading">Upload your DOC or DOCX file</h3>
+                            </div>
+
+                            <button class="ghost-button" id="switcherToggle" type="button">
+                                Switch Tool
+                            </button>
+                        </div>
+
+                        <div class="mini-tool-grid" id="miniToolGrid"></div>
+
+                        <div class="converter-stage" data-state="idle" id="converterStage">
+                            <section class="upload-stage stage-card stage-active" id="uploadStage">
+                                <label class="drop-zone" for="fileInput" id="dropZone">
+                                    <input id="fileInput" class="file-input" type="file">
+                                    <div class="drop-zone-inner">
+                                        <div class="drop-icon-wrap">
+                                            <svg class="drop-icon" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                                                <path d="M12 16V5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                                <path d="M8 9L12 5L16 9" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                                <path d="M5 18.5C5 19.88 6.12 21 7.5 21H16.5C17.88 21 19 19.88 19 18.5V18" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                                            </svg>
+                                        </div>
+                                        <h3>Drag, drop, and launch the conversion</h3>
+                                        <p id="dropHint">Supports .doc and .docx files up to 50MB.</p>
+                                        <span class="button button-primary drop-button">Choose File</span>
+                                    </div>
+                                </label>
+                            </section>
+
+                            <section class="file-stage stage-card" id="fileStage">
+                                <div class="selected-file-card">
+                                    <div class="selected-file-icon" id="selectedFileBadge">DOC</div>
+                                    <div class="selected-file-copy">
+                                        <span class="selected-file-label">Selected file</span>
+                                        <strong id="selectedFileName">document.docx</strong>
+                                        <p id="selectedFileMeta">Ready to convert</p>
+                                    </div>
+                                    <button class="icon-button" id="resetFileButton" type="button" aria-label="Remove file">x</button>
+                                </div>
+
+                                <div class="stage-actions">
+                                    <button class="button button-primary" id="convertButton" type="button">Start Conversion</button>
+                                    <button class="button button-secondary" id="changeFileButton" type="button">Replace File</button>
+                                </div>
+                            </section>
+
+                            <section class="progress-stage stage-card" id="progressStage">
+                                <div class="progress-ring-wrap">
+                                    <div class="progress-ring"></div>
+                                </div>
+                                <div class="progress-copy">
+                                    <span class="eyebrow">Processing</span>
+                                    <h3 id="progressTitle">Sending your file to Convertly</h3>
+                                    <p id="progressMessage">
+                                        The upload has been accepted. We are polling the conversion status now.
+                                    </p>
+                                </div>
+                                <div class="progress-line">
+                                    <span class="progress-line-fill"></span>
+                                </div>
+                            </section>
+
+                            <section class="result-stage stage-card" id="resultStage">
+                                <div class="result-burst" aria-hidden="true">
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                    <span></span>
+                                </div>
+                                <div class="result-icon">Done</div>
+                                <div class="result-copy">
+                                    <span class="eyebrow">Finished</span>
+                                    <h3 id="resultTitle">Your file is ready</h3>
+                                    <p id="resultFilename">output.pdf</p>
+                                </div>
+                                <div class="stage-actions">
+                                    <button class="button button-primary" id="downloadButton" type="button">Download Result</button>
+                                    <button class="button button-secondary" id="convertAnotherButton" type="button">Convert Another</button>
+                                </div>
+                            </section>
+
+                            <section class="error-stage stage-card" id="errorStage">
+                                <div class="error-icon">!</div>
+                                <div class="result-copy">
+                                    <span class="eyebrow">Something broke</span>
+                                    <h3 id="errorTitle">The conversion could not be completed</h3>
+                                    <p id="errorMessage">
+                                        Please check your file format and try again. If the backend is down, start the Docker services first.
+                                    </p>
+                                </div>
+                                <div class="stage-actions">
+                                    <button class="button button-primary" id="retryButton" type="button">Try Again</button>
+                                    <button class="button button-secondary" id="clearErrorButton" type="button">Reset Workspace</button>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="section process-section" id="process">
+                <div class="section-heading">
+                    <span class="eyebrow">Process</span>
+                    <h2>Built for momentum, not friction.</h2>
+                </div>
+
+                <div class="process-grid">
+                    <article class="process-card card-panel">
+                        <span class="process-index">01</span>
+                        <h3>Choose a conversion route</h3>
+                        <p>The tool cards and compact switcher keep every format one click away.</p>
+                    </article>
+                    <article class="process-card card-panel">
+                        <span class="process-index">02</span>
+                        <h3>Watch the system react</h3>
+                        <p>Upload, progress, success, and error states all animate clearly so the product feels alive.</p>
+                    </article>
+                    <article class="process-card card-panel">
+                        <span class="process-index">03</span>
+                        <h3>Download and move on fast</h3>
+                        <p>When the worker finishes, the UI pivots straight into a clean result and download action.</p>
+                    </article>
+                </div>
+            </section>
+        </main>
     </div>
-</main>
 
-    <footer>
-        <div class="container">
-            <p>&copy; 2025 Convertly. All rights reserved.</p>
-        </div>
-    </footer>
-
-    <!-- Asosiy JavaScript faylini ulash -->
+    <script src="./scripts/converters.js"></script>
     <script src="./scripts/main.js"></script>
 </body>
 </html>
