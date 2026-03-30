@@ -12,7 +12,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./styles/main.css">
-    <link rel="icon" type="image/png" sizes="32x32" href="./images/img_1.png">
+    <link rel="icon" type="image/svg+xml" href="./images/logo.svg?v=2">
 </head>
 <body>
     <div class="page-shell">
@@ -22,7 +22,7 @@
         <header class="topbar">
             <div class="brandmark">
                 <img src="./images/logo.svg" alt="Convertly logo" class="brandmark-logo">
-                <div>
+                <div class="brandmark-copy">
                     <span class="brandmark-title">Convertly</span>
                     <span class="brandmark-caption">Conversion Workspace</span>
                 </div>
@@ -34,7 +34,14 @@
                 <a href="#process">Process</a>
             </nav>
 
-            <a class="topbar-cta" href="#workspace">Start Converting</a>
+            <div class="topbar-actions">
+                <button class="ghost-button auth-trigger" id="authButton" type="button">Sign In</button>
+                <div class="user-chip" id="userChip" hidden>
+                    <span class="user-chip-label">Signed in</span>
+                    <strong id="userChipName">Guest</strong>
+                </div>
+                <a class="topbar-cta" href="#workspace">Start Converting</a>
+            </div>
         </header>
 
         <main>
@@ -52,6 +59,12 @@
                         <a class="button button-primary" href="#workspace">Open Workspace</a>
                         <a class="button button-secondary" href="#tools">Browse Formats</a>
                     </div>
+
+                    <a class="quick-jump-card" href="#workspace">
+                        <span class="quick-jump-label">Start Here</span>
+                        <strong>Jump straight to the converter workspace</strong>
+                        <span class="quick-jump-copy">Upload, convert, and download from the highlighted section below.</span>
+                    </a>
 
                     <dl class="hero-stats">
                         <div class="stat-card">
@@ -180,10 +193,10 @@
                         </div>
                     </aside>
 
-                    <div class="workspace-main card-panel">
+                    <div class="workspace-main card-panel workspace-spotlight">
                         <div class="workspace-head">
                             <div>
-                                <span class="eyebrow">Animated Workspace</span>
+                                <span class="eyebrow workspace-eyebrow">Animated Workspace</span>
                                 <h3 id="workspaceHeading">Upload your DOC or DOCX file</h3>
                             </div>
 
@@ -309,6 +322,56 @@
                 </div>
             </section>
         </main>
+    </div>
+
+    <div class="auth-modal-backdrop" id="authModalBackdrop" hidden>
+        <div class="auth-modal" role="dialog" aria-modal="true" aria-labelledby="authModalTitle">
+            <button class="auth-modal-close" id="authModalClose" type="button" aria-label="Close auth modal">x</button>
+
+            <div class="auth-modal-copy">
+                <span class="eyebrow">Continue Download</span>
+                <h2 id="authModalTitle">Create an account before downloading</h2>
+                <p>
+                    You can convert as a guest, but downloads are protected behind a quick account step.
+                    We currently use email login and the data model is already prepared for future email verification.
+                </p>
+            </div>
+
+            <div class="auth-tabs">
+                <button class="auth-tab is-active" id="loginTab" type="button">Login</button>
+                <button class="auth-tab" id="registerTab" type="button">Register</button>
+            </div>
+
+            <form class="auth-form auth-form-active" id="loginForm">
+                <label class="auth-field">
+                    <span>Email</span>
+                    <input id="loginEmail" name="email" type="email" autocomplete="email" required>
+                </label>
+                <label class="auth-field">
+                    <span>Password</span>
+                    <input id="loginPassword" name="password" type="password" autocomplete="current-password" required>
+                </label>
+                <button class="button button-primary auth-submit" type="submit">Login and download</button>
+            </form>
+
+            <form class="auth-form" id="registerForm">
+                <label class="auth-field">
+                    <span>Name</span>
+                    <input id="registerUsername" name="username" type="text" autocomplete="name" required>
+                </label>
+                <label class="auth-field">
+                    <span>Email</span>
+                    <input id="registerEmail" name="email" type="email" autocomplete="email" required>
+                </label>
+                <label class="auth-field">
+                    <span>Password</span>
+                    <input id="registerPassword" name="password" type="password" autocomplete="new-password" minlength="8" required>
+                </label>
+                <button class="button button-primary auth-submit" type="submit">Register and download</button>
+            </form>
+
+            <p class="auth-feedback" id="authFeedback" hidden></p>
+        </div>
     </div>
 
     <script src="./scripts/converters.js"></script>

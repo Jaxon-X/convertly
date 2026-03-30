@@ -1,6 +1,7 @@
 window.CONVERTER_CONFIGS = [
     {
         id: "doc-to-pdf",
+        tone: "doc",
         badge: "DOC",
         title: "DOC to PDF",
         shortLabel: "DOC file",
@@ -12,6 +13,7 @@ window.CONVERTER_CONFIGS = [
     },
     {
         id: "doc-to-txt",
+        tone: "txt",
         badge: "TXT",
         title: "DOC to TXT",
         shortLabel: "DOC file",
@@ -23,6 +25,7 @@ window.CONVERTER_CONFIGS = [
     },
     {
         id: "excel-to-pdf",
+        tone: "sheet",
         badge: "XLS",
         title: "Excel to PDF",
         shortLabel: "Excel sheet",
@@ -34,6 +37,7 @@ window.CONVERTER_CONFIGS = [
     },
     {
         id: "csv-to-excel",
+        tone: "data",
         badge: "CSV",
         title: "CSV to Excel",
         shortLabel: "CSV file",
@@ -45,6 +49,7 @@ window.CONVERTER_CONFIGS = [
     },
     {
         id: "image-to-pdf",
+        tone: "image",
         badge: "IMG",
         title: "Image to PDF",
         shortLabel: "image",
@@ -56,6 +61,7 @@ window.CONVERTER_CONFIGS = [
     },
     {
         id: "odt-to-pdf",
+        tone: "odt",
         badge: "ODT",
         title: "ODT to PDF",
         shortLabel: "ODT file",
