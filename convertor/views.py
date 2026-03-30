@@ -1,16 +1,18 @@
-from rest_framework.views import  APIView
-from rest_framework.response import Response
-from rest_framework.parsers import MultiPartParser, FormParser
-
 from celery.result import AsyncResult
-
-from convertor.serializers import FileUploadSerializer
-from rest_framework import status
+from django.core import signing
+from django.core.signing import BadSignature, SignatureExpired
 from django.http import FileResponse
 import os
+from rest_framework import status
+from rest_framework.parsers import MultiPartParser, FormParser
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from rest_framework.views import  APIView
 
 from convertor.paths import CONVERTED_FILES_DIR, INPUT_FILES_DIR
+from convertor.serializers import FileUploadSerializer
 from .tasks import (
+    CONVERTED_FILE_TTL_SECONDS,
     UPLOADED_FILE_TTL_SECONDS,
     convertor_csv_to_excel,
     convertor_doc_to_pdf,
@@ -20,6 +22,8 @@ from .tasks import (
     convertor_odt_to_pdf,
     delete_file,
 )
+
+DOWNLOAD_TOKEN_SALT = "convertor.download"
 
 
 def save_uploaded_file(uploaded_file):
@@ -35,6 +39,32 @@ def save_uploaded_file(uploaded_file):
         return input_file_path
 
     return None
+
+
+def build_download_token(filename):
+    return signing.dumps({"filename": filename}, salt=DOWNLOAD_TOKEN_SALT)
+
+
+def validate_download_token(token, filename):
+    payload = signing.loads(
+        token,
+        salt=DOWNLOAD_TOKEN_SALT,
+        max_age=CONVERTED_FILE_TTL_SECONDS,
+    )
+    return payload.get("filename") == filename
+
+
+def build_conversion_response(task, filename, input_file_path):
+    return Response(
+        {
+            "message": "File was successfully converted",
+            "input_file_path": input_file_path,
+            "filename": filename,
+            "task_id": task.id,
+            "download_token": build_download_token(filename),
+        },
+        status=status.HTTP_200_OK,
+    )
 
 class DocToPdfView(APIView):    
     parser_classes = [MultiPartParser, FormParser]
@@ -56,12 +86,7 @@ class DocToPdfView(APIView):
 
             converted = convertor_doc_to_pdf.delay(input_file_path)
 
-            return  Response({
-                "message": "File was successfully converted",
-                "input_file_path": input_file_path,
-                "filename": converted_filename,
-                "task_id": converted.id
-            }, status=status.HTTP_200_OK)
+            return build_conversion_response(converted, converted_filename, input_file_path)
 
         except Exception as e:
             return Response(
@@ -91,12 +116,7 @@ class  DocToTxtView(APIView):
 
             converted = convertor_doc_to_txt.delay(input_file_path)
 
-            return  Response({
-                "message": "File was successfully converted",
-                "input_file_path": input_file_path,
-                "filename": converted_filename,
-                "task_id": converted.id
-            }, status=status.HTTP_200_OK)
+            return build_conversion_response(converted, converted_filename, input_file_path)
 
         except Exception as e:
             return Response(
@@ -124,12 +144,7 @@ class ExcelToPdfView(APIView):
 
             converted = convertor_excel_to_pdf.delay(input_file_path)
 
-            return  Response({
-                "message": "File was successfully converted",
-                "input_file_path": input_filename,
-                "filename": converted_filename,
-                "task_id": converted.id
-            }, status=status.HTTP_200_OK)
+            return build_conversion_response(converted, converted_filename, input_file_path)
 
         except Exception as e:
             return Response(
@@ -156,12 +171,7 @@ class CsvToExcelView(APIView):
                 return Response({"msg": "File didn't write to file"})
 
             converted = convertor_csv_to_excel.delay(input_file_path)
-            return  Response({
-                "message": "File was successfully converted",
-                "input_file_path": input_filename,
-                "filename": converted_filename,
-                "task_id": converted.id
-            }, status=status.HTTP_200_OK)
+            return build_conversion_response(converted, converted_filename, input_file_path)
 
         except Exception as e:
             return Response(
@@ -187,12 +197,7 @@ class ImageToPdfView(APIView):
                 return Response({"msg": "File didn't write to file"})
 
             converted = convertor_image_to_pdf.delay(input_file_path)
-            return  Response({
-                "message": "File was successfully converted",
-                "input_file_path": input_filename,
-                "filename": converted_filename,
-                "task_id": converted.id
-            }, status=status.HTTP_200_OK)
+            return build_conversion_response(converted, converted_filename, input_file_path)
 
         except Exception as e:
             return Response(
@@ -221,12 +226,7 @@ class OdtToPdfView(APIView):
 
             converted = convertor_odt_to_pdf.delay(input_file_path)
 
-            return  Response({
-                "message": "File was successfully converted",
-                "input_file_path": input_filename,
-                "filename": converted_filename,
-                "task_id": converted.id
-            }, status=status.HTTP_200_OK)
+            return build_conversion_response(converted, converted_filename, input_file_path)
 
         except Exception as e:
             return Response(
@@ -237,9 +237,22 @@ class OdtToPdfView(APIView):
 
 
 class FileDownloadView(APIView):
+    permission_classes = (IsAuthenticated,)
 
     def get(self, request, filename):
         try:
+            token = request.query_params.get("token")
+            if not token:
+                return Response({"error": "Download token is required"}, status=status.HTTP_400_BAD_REQUEST)
+
+            try:
+                if not validate_download_token(token, filename):
+                    return Response({"error": "Download token is invalid"}, status=status.HTTP_403_FORBIDDEN)
+            except SignatureExpired:
+                return Response({"error": "Download token has expired"}, status=status.HTTP_403_FORBIDDEN)
+            except BadSignature:
+                return Response({"error": "Download token is invalid"}, status=status.HTTP_403_FORBIDDEN)
+
             converted_file = os.path.join(CONVERTED_FILES_DIR, filename)
             if not os.path.exists(converted_file):
                 return Response({"error": "File not found"}, status=status.HTTP_400_BAD_REQUEST)

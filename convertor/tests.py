@@ -2,9 +2,10 @@ import os
 import tempfile
 from unittest.mock import patch
 
+from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import SimpleTestCase
-from rest_framework.test import APIRequestFactory
+from django.test import SimpleTestCase, TestCase
+from rest_framework.test import APIRequestFactory, force_authenticate
 
 from convertor.paths import CONVERTED_FILES_DIR, INPUT_FILES_DIR
 from convertor.tasks import (
@@ -12,7 +13,12 @@ from convertor.tasks import (
     UPLOADED_FILE_TTL_SECONDS,
     convertor_doc_to_pdf,
 )
-from convertor.views import FileDownloadView, save_uploaded_file
+from convertor.views import (
+    FileDownloadView,
+    build_download_token,
+    save_uploaded_file,
+    validate_download_token,
+)
 
 
 class UploadLifecycleTests(SimpleTestCase):
@@ -54,12 +60,38 @@ class ConvertedLifecycleTests(SimpleTestCase):
                 convertor_doc_to_pdf.run("input.docx")
 
 
-class FileDownloadViewTests(SimpleTestCase):
-    def test_download_does_not_delete_file_immediately(self):
-        factory = APIRequestFactory()
-        view = FileDownloadView.as_view()
+class DownloadTokenTests(SimpleTestCase):
+    def test_download_token_matches_expected_filename(self):
+        token = build_download_token("result.pdf")
+        self.assertTrue(validate_download_token(token, "result.pdf"))
+        self.assertFalse(validate_download_token(token, "other.pdf"))
+
+
+class FileDownloadViewTests(TestCase):
+    def setUp(self):
+        self.factory = APIRequestFactory()
+        self.view = FileDownloadView.as_view()
+        self.user = get_user_model().objects.create_user(
+            username="tester",
+            email="tester@example.com",
+            password="secret123",
+        )
+
+    def test_download_requires_authentication(self):
+        request = self.factory.get("/api/convert/download/result.pdf/")
+        response = self.view(request, filename="result.pdf")
+        self.assertEqual(response.status_code, 401)
+
+    def test_download_requires_signed_token(self):
+        request = self.factory.get("/api/convert/download/result.pdf/")
+        force_authenticate(request, user=self.user)
+        response = self.view(request, filename="result.pdf")
+        self.assertEqual(response.status_code, 400)
+
+    def test_authenticated_download_returns_file_without_deleting_it_immediately(self):
         original_exists = os.path.exists
         original_open = open
+        token = build_download_token("result.pdf")
 
         with tempfile.TemporaryDirectory() as temp_dir:
             converted_dir = os.path.join(temp_dir, "converted_files")
@@ -73,12 +105,14 @@ class FileDownloadViewTests(SimpleTestCase):
             def remap_path(path):
                 return path.replace(CONVERTED_FILES_DIR, converted_dir)
 
+            request = self.factory.get(f"/api/convert/download/{file_name}/", {"token": token})
+            force_authenticate(request, user=self.user)
+
             with patch("convertor.views.os.path.exists", side_effect=lambda path: original_exists(remap_path(path))), patch(
                 "convertor.views.open",
                 side_effect=lambda path, mode: original_open(remap_path(path), mode),
             ):
-                response = view(factory.get(f"/api/convert/download/{file_name}/"), filename=file_name)
+                response = self.view(request, filename=file_name)
 
             self.assertEqual(response.status_code, 200)
             self.assertTrue(os.path.exists(file_path))
-
